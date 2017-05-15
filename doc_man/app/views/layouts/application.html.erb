@@ -9,6 +9,41 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+          <%= link_to "DOCUMENT MANAGER", documents_path, id: "logo" %>
+          <nav>
+              <ul class="nav navbar-nav navbar-right">
+                  <li>
+                      <%= link_to 'Documents', documents_path %>
+                  </li>
+                  <li>
+                      <%= link_to 'Categories', categories_path %>
+                  </li>
+                  <% if user_signed_in? %>
+                      <li>
+                          <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+                      </li>
+                  <%else %>
+                      <li>
+                          <%= link_to 'Sign In', new_user_session_path %>
+                      </li>
+                      <li>
+                          <%= link_to 'Register', new_user_registration_path %>
+                      </li>
+                  <% end %>
+              </ul>
+          </nav>
+      </div>
+    </header>
+    <div class="container" style='margin-top:60px'>
+      <% if not notice.nil? %>
+        <p class="alert alert-success" role="alert"><%= notice %></p>
+      <% end %>
+      <% if not alert.nil? %>
+        <p class="alert alert-danger" role="alert"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>
