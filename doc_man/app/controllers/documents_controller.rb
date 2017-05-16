@@ -19,20 +19,17 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-
   end
 
   def markdownHtml
     
-    to_send = params[:rc_text]
+    text_to_markDown = params[:rc_text]
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    test1 = markdown.render(to_send)
-    puts test1
-    rez = {"near" => test1}
+    markwond_text = markdown.render(text_to_markDown)
+    jsonObject = {"text" => markwond_text}
     respond_to do |format|
       format.html
-      format.json { render json: rez }
+      format.json { render json: jsonObject }
     end
   end
 

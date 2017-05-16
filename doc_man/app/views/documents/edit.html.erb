@@ -62,7 +62,7 @@ $("#text_to_edit").keyup(function() {
             rc_text: rc_to_send // < note use of 'this' here
         },
         success: function(json) {
-        	document.getElementById("demo").innerHTML = json.near;
+        	document.getElementById("demo").innerHTML = json.text;
         	//result = $.parseJSON(json);
         	
         },
