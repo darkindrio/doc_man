@@ -39,6 +39,9 @@ gem 'redcarpet', '~> 3.4.0'
 
 # bootstrap
 gem 'bootstrap-sass', '~> 3.3.6'
+
+# Select2 gem
+gem 'select2-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-  before_action :set_document, only: [:show, :edit, :update, :destroy]
+  before_action :set_document, only: [:show, :edit, :update, :destroy, :categories]
 
   # GET /documents
   # GET /documents.json
@@ -15,17 +15,23 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   def new
     @document = Document.new
+    @document.categories = [Category.new]
   end
 
   # GET /documents/1/edit
   def edit
   end
 
+  def categories
+  end
+
   # POST /documents
   # POST /documents.json
   def create
-    @document = Document.new(document_params)
-
+    @document = Document.new(params[document_params])
+     @document.categories << Category.find(params[:document][:categories].drop(1))
+     @document.title = params[:document][:title]
+     @document.text = params[:document][:text]
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
@@ -40,6 +46,9 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1
   # PATCH/PUT /documents/1.json
   def update
+    @document.categories = []
+    @document.categories << Category.find(params[:document][:categories].drop(1))
+    params[:document][:categories] << Category.find(params[:document][:categories].drop(1))
     respond_to do |format|
       if @document.update(document_params)
         format.html { redirect_to @document, notice: 'Document was successfully updated.' }
@@ -69,6 +78,6 @@ class DocumentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params.require(:document).permit(:title, :text, :category_id)
+      params[:document].permit(:title, :text, :categories => [])
     end
 end

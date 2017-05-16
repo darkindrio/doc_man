@@ -7,12 +7,20 @@
 
 <p>
   <strong>Text:</strong>
+  <pre>
   <%= markdown(@document.text) %>
+  </pre>
 </p>
 
 <p>
-  <strong>Category:</strong>
-  <%= @document.category %>
+  <strong>Categories:</strong>
+  <% @document.categories.each do |c| %>
+      <%= c  %>
+      <% if not c.equal? @document.categories.last %>
+      |
+      <% end %>
+  <% end %>
+
 </p>
 
 <%= link_to 'Edit', edit_document_path(@document) %> |

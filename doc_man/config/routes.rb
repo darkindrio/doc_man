@@ -3,7 +3,9 @@ Rails.application.routes.draw do
     get "/users/sign_out" => "devise/sessions#destroy", :as => :destroy_user_session
   end
   authenticate :user do
-      resources :documents
+      resources :documents do
+        get 'categories', on: :member
+      end
       resources :categories
       resources :users
       root to: 'documents#index'
