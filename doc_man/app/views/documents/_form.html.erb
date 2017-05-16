@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= f.label :category_id %>
-    <%= f.text_field :category_id %>
+    <%= f.select :category_id, options_for_select(Category.all.map{|s|[s.to_s, s.id]}) %>
   </div>
 
   <div class="actions">
