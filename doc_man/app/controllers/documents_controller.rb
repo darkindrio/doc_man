@@ -19,7 +19,23 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+
   end
+
+  def markdownHtml
+    
+    to_send = params[:rc_text]
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+    test1 = markdown.render(to_send)
+    puts test1
+    rez = {"near" => test1}
+    respond_to do |format|
+      format.html
+      format.json { render json: rez }
+    end
+  end
+
 
   # POST /documents
   # POST /documents.json
@@ -63,6 +79,8 @@ class DocumentsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    
+
     def set_document
       @document = Document.find(params[:id])
     end
