@@ -1,34 +1,40 @@
-<h1>Documents</h1>
 
-<table class='table'>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Text</th>
-      <th>Category</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @documents.each do |document| %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1>Documents</h1>
+  </div>
+  <table class='table'>
+    <thead>
       <tr>
-        <td><%= document.title %></td>
-        <td><%= truncate(document.text.html_safe, length:75) %></td>
-        <td><p>
-          <% document.categories.each do |c| %>
-            <%= c%><%if not c.equal? document.categories.last %>, <% end %>
-          <% end %>
-
-        </p></td>
-        <td><%= link_to 'Show', document %></td>
-        <td><%= link_to 'Edit', edit_document_path(document) %></td>
-        <td><%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Title</th>
+        <th>Text</th>
+        <th>Category</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @documents.each do |document| %>
+        <tr>
+          <td><%= document.title %></td>
+          <td><%= truncate(document.text.html_safe, length:75) %></td>
+          <td><p>
+            <% document.categories.each do |c| %>
+              <%= c%><%if not c.equal? document.categories.last %>, <% end %>
+            <% end %>
+
+          </p></td>
+          <td><%= link_to 'Show', document, class: "btn btn-info" %></td>
+          <td><%= link_to 'Edit', edit_document_path(document), class: "btn btn-primary" %></td>
+          <td><%= link_to 'Destroy', document, class: "btn btn-danger" ,method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+
 
 <br>
 
-<%= link_to 'New Document', new_document_path %>
+<%= link_to 'New Document', new_document_path, class: "btn btn-primary" %>
