@@ -15,6 +15,9 @@
   <div class="field">
     <%= f.text_field :title %>
   </div>
+  <div class="field">
+    <%= f.collection_select(:categories, Category.all, :id, :title, {}, {:multiple => true, :class => 'category_selector'}) %>
+  </div>
 <table class = "table">
 	<tr>
 		<th>
@@ -33,11 +36,6 @@
 	</tr>
 </table>
 
-  <div class="field">
-    <%= f.label :category_id %>
-    <%= f.select :category_id, options_for_select(Category.all.map{|s|[s.to_s, s.id]}) %>
-  </div>
-
   <div class="actions">
     <%= f.submit %>
   </div>
@@ -47,6 +45,10 @@
 <%= link_to 'Back', documents_path %>
 
 <script>
+
+$(document).ready(function(){
+  $(".category_selector").select2();
+});
 
 
 $("#text_to_edit").keyup(function() {
@@ -58,13 +60,13 @@ $("#text_to_edit").keyup(function() {
         type: "GET",
         dataType: "json",
         url: "/test",
-        data: { 
+        data: {
             rc_text: rc_to_send // < note use of 'this' here
         },
         success: function(json) {
         	document.getElementById("demo").innerHTML = json.text;
         	//result = $.parseJSON(json);
-        	
+
         },
         error: function(json) {
             alert('error');

@@ -59,8 +59,10 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1
   # PATCH/PUT /documents/1.json
   def update
-    @document.categories = []
-    @document.categories << Category.find(params[:document][:categories].drop(1))
+    if not Category.find(params[:document][:categories].drop(1)).blank?
+      @document.categories = []
+      @document.categories << Category.find(params[:document][:categories].drop(1))
+    end
     params[:document][:categories] << Category.find(params[:document][:categories].drop(1))
     respond_to do |format|
       if @document.update(document_params)
