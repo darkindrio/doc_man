@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= f.label :text %>
-    <%= f.text_area :text %>
+    <%= markdown.render(f.text_area :text) %>
   </div>
 
   <div class="field">
