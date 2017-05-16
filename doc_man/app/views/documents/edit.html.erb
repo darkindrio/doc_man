@@ -21,17 +21,29 @@
 <table class = "table">
 	<tr>
 		<th>
-			 <%= f.label :text %>
-			  <div class="field">
-			    <%= f.text_area :text, id: "text_to_edit",style: "margin: 0px; height: 410px; width: 573px;" %>
-			  </div>
+      <div class="panel panel-primary" >
+        <div class = "panel-heading">
+          <%= f.label :text %>
+        </div>
+        <div class="panel-body">
+          <%= f.text_area :text, id: "text_to_edit",style: "margin: 0px; height: 410px; width: 573px;" %>
+        </div>
+      </div> 
 		</th>
 		<th>
-			 <%= f.label :preview %>
-			  <div class="field" id='preview'>
-			    <%= markdown(@document.text) %>
-			  </div>
-			  <p id="demo"></p>
+			  <div class="panel panel-primary" >
+          <div class = "panel-heading">
+            <%= f.label :preview %>
+          </div>
+          <div class="panel-body">
+            <div id='preview'>
+              <p >
+                <%= markdown(@document.text) %>
+              </p>
+            </div>
+            <p id="demo" ></p>
+          </div>    
+			  </div>			  
 		</th>
 	</tr>
 </table>
@@ -64,6 +76,7 @@ $("#text_to_edit").keyup(function() {
             rc_text: rc_to_send // < note use of 'this' here
         },
         success: function(json) {
+          //document.getElementById("demo").className = "panel panel-primary";
         	document.getElementById("demo").innerHTML = json.text;
         	//result = $.parseJSON(json);
 
