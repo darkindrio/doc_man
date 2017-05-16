@@ -1,6 +1,74 @@
 <h1>Editing Document</h1>
+<%= form_for(@document) do |f| %>
+  <% if @document.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@document.errors.count, "error") %> prohibited this @document from being saved:</h2>
+      <ul>
+      <% @document.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<%= render 'form', document: @document %>
+   <%= f.label :title %>
+  <div class="field">
+    <%= f.text_field :title %>
+  </div>
+<table class = "table">
+	<tr>
+		<th>
+			 <%= f.label :text %>
+			  <div class="field">
+			    <%= f.text_area :text, id: "text_to_edit",style: "margin: 0px; height: 410px; width: 573px;" %>
+			  </div>
+		</th>
+		<th>
+			 <%= f.label :preview %>
+			  <div class="field" id='preview'>
+			    <%= markdown(@document.text) %>
+			  </div>
+			  <p id="demo"></p>
+		</th>
+	</tr>
+</table>
+
+  <div class="field">
+    <%= f.label :category_id %>
+    <%= f.select :category_id, options_for_select(Category.all.map{|s|[s.to_s, s.id]}) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
 
 <%= link_to 'Show', @document %> |
 <%= link_to 'Back', documents_path %>
+
+<script>
+
+
+$("#text_to_edit").keyup(function() {
+	var rc_to_send = document.getElementById ( "text_to_edit" ).value;
+	if (document.contains(document.getElementById("preview"))) {
+            document.getElementById("preview").remove();
+	}
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "/test",
+        data: { 
+            rc_text: rc_to_send // < note use of 'this' here
+        },
+        success: function(json) {
+        	document.getElementById("demo").innerHTML = json.text;
+        	//result = $.parseJSON(json);
+        	
+        },
+        error: function(json) {
+            alert('error');
+        }
+    });
+});
+</script>

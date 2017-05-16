@@ -25,6 +25,19 @@ class DocumentsController < ApplicationController
   def categories
   end
 
+  def markdownHtml
+
+    text_to_markDown = params[:rc_text]
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+    markwond_text = markdown.render(text_to_markDown)
+    jsonObject = {"text" => markwond_text}
+    respond_to do |format|
+      format.html
+      format.json { render json: jsonObject }
+    end
+  end
+
+
   # POST /documents
   # POST /documents.json
   def create
@@ -72,6 +85,8 @@ class DocumentsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+
     def set_document
       @document = Document.find(params[:id])
     end
