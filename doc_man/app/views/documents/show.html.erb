@@ -9,22 +9,19 @@
   </div>
   <div class="panel-body">
     <p>
-      <%= markdown(@document.text) %>
+      <%= raw @document.text %>
     </p>
   </div>
   <div class="panel-footer">
-    <p> categorias </p>
+    <strong>Categories:</strong>
+    <% @document.categories.each do |c| %>
+        <%= c  %>
+        <% if not c.equal? @document.categories.last %>
+        |
+        <% end %>
+    <% end %>
   </div>
 </div>
-<p>
-  <strong>Categories:</strong>
-  <% @document.categories.each do |c| %>
-      <%= c  %>
-      <% if not c.equal? @document.categories.last %>
-      |
-      <% end %>
-  <% end %>
-</p>
 
-<%= link_to 'Edit', edit_document_path(@document), class: "btn btn-primary" %> |
-<%= link_to 'Back', documents_path, class: "btn" %>
+<%= link_to 'Edit', edit_document_path(@document), class: "btn btn-primary", style: "color:white" %> |
+<%= link_to 'Back', documents_path, class: "btn btn-success", style: "color:white" %>

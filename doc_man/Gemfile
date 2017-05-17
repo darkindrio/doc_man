@@ -39,6 +39,10 @@ gem 'redcarpet', '~> 3.4.0'
 
 # bootstrap
 gem 'bootstrap-sass', '~> 3.3.6'
+gem 'font-awesome-rails'
+
+# Install seed-dump for create seed from actual database
+gem 'seed_dump'
 
 # Select2 gem
 gem 'select2-rails'

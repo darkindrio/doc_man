@@ -15,8 +15,9 @@
   <div class="field">
     <%= f.text_field :title %>
   </div>
+  <strong>Change Categories (Leave blank if not changing)</strong>
   <div class="field">
-    <%= f.collection_select(:categories, Category.all, :id, :title, {}, {:multiple => true, :class => 'category_selector'}) %>
+    <%= f.collection_select(:categories, Category.all, :id, :title, {}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
 <table class = "table">
 	<tr>
@@ -28,7 +29,7 @@
         <div class="panel-body">
           <%= f.text_area :text, id: "text_to_edit",style: "margin: 0px; height: 410px; width: 573px;" %>
         </div>
-      </div> 
+      </div>
 		</th>
 		<th>
 			  <div class="panel panel-primary" >
@@ -42,8 +43,8 @@
               </p>
             </div>
             <p id="demo" ></p>
-          </div>    
-			  </div>			  
+          </div>
+			  </div>
 		</th>
 	</tr>
 </table>
@@ -53,8 +54,8 @@
   </div>
 <% end %>
 
-<%= link_to 'Show', @document, class: "btn btn-info" %> |
-<%= link_to 'Back', documents_path, class: "btn" %>
+<%= link_to 'Show', @document, class: "btn btn-primary", style: "color:white" %> |
+<%= link_to 'Back', documents_path, class: "btn btn-success", style: "color:white" %>
 
 <script>
 

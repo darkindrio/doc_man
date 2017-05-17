@@ -16,16 +16,40 @@
     <%= f.text_field :title %>
   </div>
 
-  <%= f.label :text %>
+  <%= f.label :categories %>
   <div class="field">
-    <%= f.text_area :text, style: "margin: 0px; height: 410px; width: 573px;" %>
+    <%= f.collection_select(:categories, Category.all, :id, :title, {}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
 
-  <div class="field">
-    <%= f.collection_select(:categories, Category.all, :id, :title, {}, {:multiple => true, :class => 'category_selector'}) %>
-  </div>
-
-
+  <table class = "table">
+  	<tr>
+  		<th>
+        <div class="panel panel-primary" >
+          <div class = "panel-heading">
+            <%= f.label :text %>
+          </div>
+          <div class="panel-body">
+            <%= f.text_area :text, id: "text_to_edit",style: "margin: 0px; height: 410px; width: 573px;" %>
+          </div>
+        </div>
+  		</th>
+  		<th>
+  			  <div class="panel panel-primary" >
+            <div class = "panel-heading">
+              <%= f.label :preview %>
+            </div>
+            <div class="panel-body">
+              <div id='preview'>
+                <p >
+                  <%= markdown(@document.text) %>
+                </p>
+              </div>
+              <p id="demo" ></p>
+            </div>
+  			  </div>
+  		</th>
+  	</tr>
+  </table>
 
   <div class="actions">
     <%= f.submit %>
@@ -36,4 +60,29 @@
   $(document).ready(function(){
     $(".category_selector").select2();
   });
+
+  $("#text_to_edit").keyup(function() {
+  	var rc_to_send = document.getElementById ( "text_to_edit" ).value;
+  	if (document.contains(document.getElementById("preview"))) {
+              document.getElementById("preview").remove();
+  	}
+      $.ajax({
+          type: "GET",
+          dataType: "json",
+          url: "/test",
+          data: {
+              rc_text: rc_to_send // < note use of 'this' here
+          },
+          success: function(json) {
+            //document.getElementById("demo").className = "panel panel-primary";
+          	document.getElementById("demo").innerHTML = json.text;
+          	//result = $.parseJSON(json);
+
+          },
+          error: function(json) {
+              alert('error');
+          }
+      });
+  });
+
 </script>

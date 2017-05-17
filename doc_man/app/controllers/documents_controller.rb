@@ -10,6 +10,9 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+    markdown_text = markdown.render(@document.text)
+    @document.text = markdown_text
   end
 
   # GET /documents/new
@@ -25,8 +28,8 @@ class DocumentsController < ApplicationController
   def categories
   end
 
-  def markdownHtml
 
+  def markdownHtml
     text_to_markDown = params[:rc_text]
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
     markwond_text = markdown.render(text_to_markDown)
