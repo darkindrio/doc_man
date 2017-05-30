@@ -2,6 +2,7 @@ class Document < ApplicationRecord
   has_many :document_categories
   has_many :document_accesses
   has_many :categories, through: :document_categories
+  has_many :users, through: :document_accesses
   validates :title, {
   	length: { minimum: 3,  maximum: 50 },
   	presence: true,
