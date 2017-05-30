@@ -5,6 +5,11 @@
   <div class = "panel-heading">
     <h2>
       <strong><%= @document.title %></strong>
+      <% if @document.is_public? %>
+        <strong> [Public]<strong>
+      <% else %>
+        <strong> [Private]<strong>
+      <% end %>
     </h2>
     <h6>
       <strong>Created by:</strong>
@@ -40,7 +45,6 @@
         |
         <% end %>
     <% end %>
-
   </div>
 </div>
 

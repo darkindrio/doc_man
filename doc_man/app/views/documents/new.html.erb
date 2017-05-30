@@ -48,7 +48,10 @@
 		</th>
 	</tr>
 </table>
-
+  <div>
+    <%= f.label :is_a_public_document %>
+    <%= f.check_box :is_public, {}, 'true', 'false' %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
