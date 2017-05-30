@@ -1,6 +1,4 @@
-User.create!([
-  {first_name: "Juan", last_name: "Arévalo", email: "jparevalod93@gmail.com", password: nil, encrypted_password: "$2a$11$mgdtVDP2pc3KsGom5A4e1OtqroLfyxcttteszPHko2kWB4G1o6GZi", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 8, current_sign_in_at: "2017-05-17 02:42:02", last_sign_in_at: "2017-05-17 02:41:42", current_sign_in_ip: "127.0.0.1", last_sign_in_ip: "127.0.0.1"}
-])
+
 Category.create!([
   {title: "Comic"},
   {title: "Readme"},
@@ -19,6 +17,6 @@ DocumentCategory.create!([
   {document_id: 3, category_id: 4},
   {document_id: 4, category_id: 2},
   {document_id: 1, category_id: 1},
-  {document_id: 1, category_id: 3},
-  {document_id: 5, category_id: 3}
+  {document_id: 1, category_id: 3}
+  
 ])
