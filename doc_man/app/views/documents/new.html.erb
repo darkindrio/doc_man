@@ -21,9 +21,8 @@
   </div>
   <%= f.label :collaborators %>
   <div class="field">
-    <%= f.collection_select(:users, User.all, :id, :first_name, {}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
+    <%= f.collection_select(:users, User.where.not(id: @current_user.id), :id, :first_name, {}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
-
 <table class = "table">
 	<tr>
 		<th>

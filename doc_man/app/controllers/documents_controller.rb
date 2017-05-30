@@ -19,6 +19,8 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.new
     @document.categories = [Category.new]
+    puts current_user
+    @current_user = current_user
   end
 
   # GET /documents/1/edit
@@ -50,7 +52,7 @@ class DocumentsController < ApplicationController
     @document.title = params[:document][:title]
     @document.text = params[:document][:text]
     @document.user = current_user
-    
+
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
