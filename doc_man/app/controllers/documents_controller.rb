@@ -7,7 +7,7 @@ class DocumentsController < ApplicationController
     if !params[:search].nil?
       @documents = Document.where("title like ?", "%#{params[:search]}%").order('title ASC')
     else
-      @documents = current_user.collab_documents.order('title ASC') + Document.where("is_public == 't'")
+      @documents = (current_user.collab_documents.order('title ASC') + Document.where("is_public == 't'")).order('title ASC')
     end
   end
 
@@ -17,12 +17,38 @@ class DocumentsController < ApplicationController
       @documents = current_user.collab_documents.order('title ASC')
   end
 
+  # GET /documents
+  # GET /documents.json
+  def public_documents_index
+    if !params[:search].nil?
+      @documents = Document.where("is_public == 't' AND title like ?", "%#{params[:search]}%").order('title ASC')
+    else
+      @documents = Document.where("is_public == 't'").order('title ASC')
+    end
+  end
+
   # GET /documents/1
   # GET /documents/1.json
   def show
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
     markdown_text = markdown.render(@document.text)
     @document.text = markdown_text
+  end
+
+  # GET /documents/1
+  # GET /documents/1.json
+  def public_show
+    @document = Document.find(params[:document])
+      if @document.is_public
+        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+        markdown_text = markdown.render(@document.text)
+        @document.text = markdown_text
+      else
+        respond_to do |format|
+          format.html { redirect_to public_documents_path, alert: 'Unable to show private document.' }
+          format.json { render json: @document.errors, status: :unprocessable_entity }
+        end
+      end
   end
 
   # GET /documents/new

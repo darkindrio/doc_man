@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+
+<div class="panel panel-primary">
+  <div class = "panel-heading">
+    <h2>
+      <strong><%= @document.title %></strong>
+      <% if @document.is_public? %>
+        <strong> [Public]<strong>
+      <% else %>
+        <strong> [Private]<strong>
+      <% end %>
+    </h2>
+    <h6>
+      <strong>Created by:</strong>
+      <i>
+        <%= @document.user.first_name %>
+      </i>
+    </h6>
+    <% if !@document.users.empty? %>
+      <h6>
+        <i>
+          <strong>Collaborators:</strong>
+          <% @document.users.each do |c| %>
+              <%= c  %>
+              <% if not c.equal? @document.users.last %>
+              ,
+              <% end %>
+          <% end %>
+        </i>
+      </h6>
+    <% end %>
+
+  </div>
+  <div class="panel-body">
+    <p>
+      <%= raw @document.text %>
+    </p>
+  </div>
+  <div class="panel-footer">
+    <strong>Categories:</strong>
+    <% @document.categories.each do |c| %>
+        <%= c  %>
+        <% if not c.equal? @document.categories.last %>
+        |
+        <% end %>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to 'Back', public_documents_path, class: "btn btn-success", style: "color:white" %>

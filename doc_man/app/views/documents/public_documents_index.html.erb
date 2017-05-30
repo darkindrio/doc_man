@@ -1,0 +1,36 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1>Documents</h1>
+  </div>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Text</th>
+        <th>Category</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @documents.each do |document| %>
+        <tr>
+          <td><%= document.title %></td>
+          <td><%= truncate(document.text.html_safe, length:75) %></td>
+          <td><p>
+            <% document.categories.each do |c| %>
+              <%= c%><%if not c.equal? document.categories.last %>, <% end %>
+            <% end %>
+
+          </p></td>
+          <td><%= link_to 'Show', public_show_path(:document => document), class: "btn btn-info", style: "color:white" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+
+
+<br>
