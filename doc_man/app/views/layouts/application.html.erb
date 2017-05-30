@@ -12,31 +12,40 @@
     <header class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
           <%= link_to "DOCUMENT MANAGER", documents_path, id: "logo" %>
-          <%= form_tag(documents_path, method: 'get', class: 'navbar-form navbar-left') do %>
+          <% if user_signed_in? %>
+            <%= form_tag(documents_path, method: 'get', class: 'navbar-form navbar-left') do %>
             <%= search_field_tag 'search', params[:search], class: 'form-control', placeholder: 'Search'  %>
             <%= submit_tag "Submit", class: 'btn btn-default', :name => nil %>
+            <% end %>
+          <% else %>
+            <%= form_tag(public_documents_path, method: 'get', class: 'navbar-form navbar-left') do %>
+            <%= search_field_tag 'search', params[:search], class: 'form-control', placeholder: 'Search'  %>
+            <%= submit_tag "Submit", class: 'btn btn-default', :name => nil %>
+            <% end %>
           <% end %>
+
+
           <nav>
               <ul class="nav navbar-nav navbar-right">
-                  <li>
-                      <%= link_to documents_path do %>
-                        <span class="fa fa-book" style="color:white"></span>
-                        Browse Documents
-                      <% end %>
-                  </li>
-                  <li>
-                      <%= link_to my_documents_path do %>
-                        <span class="fa fa-book" style="color:white"></span>
-                        My Documents
-                      <% end %>
-                  </li>
-                  <li>
-                      <%= link_to categories_path do %>
-                        <span class="fa fa-tags" style="color:white"></span>
-                        Categories
-                      <% end %>
-                  </li>
                   <% if user_signed_in? %>
+                      <li>
+                          <%= link_to documents_path do %>
+                            <span class="fa fa-book" style="color:white"></span>
+                            Browse Documents
+                          <% end %>
+                      </li>
+                      <li>
+                          <%= link_to my_documents_path do %>
+                            <span class="fa fa-book" style="color:white"></span>
+                            My Documents
+                          <% end %>
+                      </li>
+                      <li>
+                          <%= link_to categories_path do %>
+                            <span class="fa fa-tags" style="color:white"></span>
+                            Categories
+                          <% end %>
+                      </li>
                       <li>
                           <%= link_to(destroy_user_session_path, :method => :delete) do %>
                             <span class="fa fa-sign-out" style="color:white"></span>
@@ -44,6 +53,12 @@
                           <% end %>
                       </li>
                   <%else %>
+                      <li>
+                          <%= link_to public_documents_path do %>
+                            <span class="fa fa-book" style="color:white"></span>
+                            Browse Documents
+                          <% end %>
+                      </li>
                       <li>
                           <%= link_to new_user_session_path do %>
                             <span class="fa fa-sign-out" style="color:white"></span>
