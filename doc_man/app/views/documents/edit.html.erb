@@ -69,6 +69,13 @@
 
 <script>
 
+$('textarea').each(function () {
+  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+}).on('input', function () {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
+});
+
 $(document).ready(function(){
   $(".category_selector").select2();
 });
@@ -97,15 +104,4 @@ $("#text_to_edit").keyup(function() {
         }
     });
 });
-// en jquary al aplica  this es el boton que estoy llamando
-//document.redy nos llama a la funcion cuando la apgina este lista.
-/*
-$('.btn')click(function(event)){
-  event.preventDefault();//mataos lo que hace el boton
-  $.get('people.json',)function(response){
-    console.log(response);
-  }
-}
-.submit(functio(e){e.priventDefault()})
-*/
 </script>
