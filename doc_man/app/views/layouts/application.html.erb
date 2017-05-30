@@ -12,6 +12,10 @@
     <header class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
           <%= link_to "DOCUMENT MANAGER", documents_path, id: "logo" %>
+          <%= form_tag(documents_path, method: 'get', class: 'navbar-form navbar-left') do %>
+            <%= search_field_tag 'search', params[:search], class: 'form-control', placeholder: 'Search'  %>
+            <%= submit_tag "Submit", class: 'btn btn-default', :name => nil %>
+          <% end %>
           <nav>
               <ul class="nav navbar-nav navbar-right">
                   <li>
