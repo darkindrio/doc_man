@@ -49,9 +49,12 @@ class DocumentsController < ApplicationController
   # POST /documents.json
   def create
     @document = Document.new(params[document_params])
-     @document.categories << Category.find(params[:document][:categories].drop(1))
-     @document.title = params[:document][:title]
-     @document.text = params[:document][:text]
+    @document.categories << Category.find(params[:document][:categories].drop(1))
+    @document.users << User.find(params[:document][:users].drop(1))
+    @document.title = params[:document][:title]
+    @document.text = params[:document][:text]
+    @document.user = current_user
+    
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
@@ -71,6 +74,13 @@ class DocumentsController < ApplicationController
       @document.categories << Category.find(params[:document][:categories].drop(1))
     end
     params[:document][:categories] << Category.find(params[:document][:categories].drop(1))
+
+    if not User.find(params[:document][:users].drop(1)).blank?
+      @document.users = []
+      @document.users << User.find(params[:document][:users].drop(1))
+    end
+    params[:document][:users] << User.find(params[:document][:users].drop(1))
+
     respond_to do |format|
       if @document.update(document_params)
         format.html { redirect_to @document, notice: 'Document was successfully updated.' }
@@ -102,6 +112,6 @@ class DocumentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params[:document].permit(:title, :text, :categories => [])
+      params[:document].permit(:title, :text, :categories => [], :users => [])
     end
 end

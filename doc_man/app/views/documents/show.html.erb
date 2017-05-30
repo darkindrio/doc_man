@@ -3,9 +3,27 @@
 
 <div class="panel panel-primary">
   <div class = "panel-heading">
-    <h3>
+    <h2>
       <strong><%= @document.title %></strong>
-    </h3>
+    </h2>
+    <h6>
+      <strong>Created by:</strong>
+      <i>
+        <%= @document.user.first_name %>
+      </i>
+    </h6>
+    <h6>
+      <i>
+        <strong>Collaborators:</strong>
+        <% @document.users.each do |c| %>
+            <%= c  %>
+            <% if not c.equal? @document.users.last %>
+            ,
+            <% end %>
+        <% end %>
+      </i>
+    </h6>
+    
   </div>
   <div class="panel-body">
     <p>
@@ -20,6 +38,7 @@
         |
         <% end %>
     <% end %>
+
   </div>
 </div>
 
