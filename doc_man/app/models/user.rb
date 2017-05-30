@@ -15,6 +15,8 @@ class User < ApplicationRecord
   		presence: true,
   		uniqueness: true
 		}
+    has_many :document_accesses 
+    has_many :documents
 
     def to_s
       return first_name + ' ' + last_name

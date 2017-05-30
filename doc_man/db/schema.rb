@@ -10,12 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530020036) do
+ActiveRecord::Schema.define(version: 20170530024534) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "document_accesses", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "document_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["document_id"], name: "index_document_accesses_on_document_id"
+    t.index ["user_id"], name: "index_document_accesses_on_user_id"
   end
 
   create_table "document_categories", force: :cascade do |t|
@@ -33,7 +42,8 @@ ActiveRecord::Schema.define(version: 20170530020036) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "is_public"
-    t.         "user"
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
