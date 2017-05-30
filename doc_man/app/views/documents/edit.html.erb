@@ -24,33 +24,33 @@
     <%= f.collection_select(:users, User.where.not(id: @document.user.id), :id, :first_name, {:selected => @document.users.ids}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
 <table class = "table">
-	<tr>
-		<th>
+	<div class = "row">
+		<div class = "col-md-6">
       <div class="panel panel-primary" >
         <div class = "panel-heading">
           <%= f.label :text %>
         </div>
         <div class="panel-body">
-          <%= f.text_area :text, id: "text_to_edit",style: "margin: 0px; height: 410px; width: 573px;" %>
+          <%= f.text_area :text, id: "text_to_edit",class: "col-md-12" %>
         </div>
       </div>
-		</th>
-		<th>
-			  <div class="panel panel-primary" >
-          <div class = "panel-heading">
-            <%= f.label :preview %>
+		</div>
+    <div class = "col-md-6">
+      <div class="panel panel-primary" >
+        <div class = "panel-heading">
+          <%= f.label :preview %>
+        </div>
+        <div class="panel-body">
+          <div id='preview'>
+            <p >
+              <%= markdown(@document.text) %>
+            </p>
           </div>
-          <div class="panel-body">
-            <div id='preview'>
-              <p >
-                <%= markdown(@document.text) %>
-              </p>
-            </div>
-            <p id="demo" ></p>
-          </div>
-			  </div>
-		</th>
-	</tr>
+          <p id="demo" ></p>
+        </div>
+      </div>
+    </div>
+	</div>
 </table>
 <%= f.label :is_a_public_document %>
 <% if @document.is_public? %>
