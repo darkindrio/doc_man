@@ -5,10 +5,16 @@ class DocumentsController < ApplicationController
   # GET /documents.json
   def index
     if !params[:search].nil?
-      @documents = Document.where("title like ?", "%#{params[:search]}%")
+      @documents = Document.where("title like ?", "%#{params[:search]}%").order('title ASC')
     else
-      @documents = Document.all
+      @documents = current_user.collab_documents.order('title ASC') + Document.where("is_public == 't'")
     end
+  end
+
+  # GET /documents
+  # GET /documents.json
+  def my_documents_index
+      @documents = current_user.collab_documents.order('title ASC')
   end
 
   # GET /documents/1
@@ -56,14 +62,12 @@ class DocumentsController < ApplicationController
     @document.title = params[:document][:title]
     @document.text = params[:document][:text]
     @document.user = current_user
-
     if params[:document][:is_public] == 'true'
       @document.is_public = true
       puts "us public"
     else
       @document.is_public = false
     end
-
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
