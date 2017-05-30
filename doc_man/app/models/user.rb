@@ -15,7 +15,8 @@ class User < ApplicationRecord
   		presence: true,
   		uniqueness: true
 		}
-    has_many :document_accesses 
+    has_many :document_accesses
+    has_many :collab_documents, through: :document_accesses, :source => :document
     has_many :documents
 
     def to_s
