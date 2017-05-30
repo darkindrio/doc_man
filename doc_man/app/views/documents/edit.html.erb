@@ -21,7 +21,7 @@
   </div>
   <strong>Add or delete collaborators (Leave blank if not changing)</strong>
   <div class="field">
-    <%= f.collection_select(:users, User.all, :id, :first_name, {}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
+    <%= f.collection_select(:users, User.where.not(id: @document.user.id), :id, :first_name, {}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
 <table class = "table">
 	<tr>
@@ -52,6 +52,12 @@
 		</th>
 	</tr>
 </table>
+<%= f.label :is_a_public_document %>
+<% if @document.is_public? %>
+  <%= f.check_box :is_public, {:checked => "checked"}, 'true', 'false' %> 
+<% else %>
+  <%= f.check_box :is_public,{}, 'true', 'false' %> 
+<% end %>
 
   <div class="actions">
     <%= f.submit %>

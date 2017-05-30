@@ -4,12 +4,10 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = current_user.collab_documents.order('title ASC')
-    @documents.add(Document.where("is_public == true"))
     if !params[:search].nil?
       @documents = Document.where("title like ?", "%#{params[:search]}%").order('title ASC')
     else
-      @documents = Document.all
+      @documents = current_user.collab_documents.order('title ASC') + Document.where("is_public == 't'")
     end
   end
 
@@ -31,6 +29,8 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.new
     @document.categories = [Category.new]
+    puts current_user
+    @current_user = current_user
   end
 
   # GET /documents/1/edit
@@ -62,7 +62,12 @@ class DocumentsController < ApplicationController
     @document.title = params[:document][:title]
     @document.text = params[:document][:text]
     @document.user = current_user
-
+    if params[:document][:is_public] == 'true'
+      @document.is_public = true
+      puts "us public"
+    else
+      @document.is_public = false
+    end
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
@@ -88,6 +93,12 @@ class DocumentsController < ApplicationController
       @document.users << User.find(params[:document][:users].drop(1))
     end
     params[:document][:users] << User.find(params[:document][:users].drop(1))
+
+    if params[:document][:is_public] == 'true'
+      @document.is_public = true
+    else
+      @document.is_public = false
+    end
 
     respond_to do |format|
       if @document.update(document_params)
@@ -120,6 +131,6 @@ class DocumentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params[:document].permit(:title, :text, :categories => [], :users => [])
+      params[:document].permit(:title, :is_public, :text, :categories => [], :users => [])
     end
 end
