@@ -7,7 +7,7 @@ class DocumentsController < ApplicationController
     if !params[:search].nil?
       @documents = Document.where("title like ?", "%#{params[:search]}%").order('title ASC')
     else
-      @documents = (current_user.collab_documents.order('title ASC') + Document.where("is_public == 't'")).order('title ASC')
+      @documents = (current_user.collab_documents.order('title ASC') + Document.where("is_public == 't'")).sort_by{'title ASC'}
     end
   end
 
@@ -85,12 +85,13 @@ class DocumentsController < ApplicationController
     @document = Document.new(params[document_params])
     @document.categories << Category.find(params[:document][:categories].drop(1))
     @document.users << User.find(params[:document][:users].drop(1))
+    @document.users.push(current_user)
     @document.title = params[:document][:title]
     @document.text = params[:document][:text]
     @document.user = current_user
+
     if params[:document][:is_public] == 'true'
       @document.is_public = true
-      puts "us public"
     else
       @document.is_public = false
     end
@@ -117,6 +118,7 @@ class DocumentsController < ApplicationController
     if not User.find(params[:document][:users].drop(1)).blank?
       @document.users = []
       @document.users << User.find(params[:document][:users].drop(1))
+      @document.users.push(current_user)
     end
     params[:document][:users] << User.find(params[:document][:users].drop(1))
 
