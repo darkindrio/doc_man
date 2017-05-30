@@ -11,13 +11,14 @@
   <body>
     <header class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
-          <%= link_to "DOCUMENT MANAGER", documents_path, id: "logo" %>
           <% if user_signed_in? %>
+            <%= link_to "DOCUMENT MANAGER", documents_path, id: "logo" %>
             <%= form_tag(documents_path, method: 'get', class: 'navbar-form navbar-left') do %>
             <%= search_field_tag 'search', params[:search], class: 'form-control', placeholder: 'Search'  %>
             <%= submit_tag "Submit", class: 'btn btn-default', :name => nil %>
             <% end %>
           <% else %>
+            <%= link_to "DOCUMENT MANAGER", public_documents_path, id: "logo" %>
             <%= form_tag(public_documents_path, method: 'get', class: 'navbar-form navbar-left') do %>
             <%= search_field_tag 'search', params[:search], class: 'form-control', placeholder: 'Search'  %>
             <%= submit_tag "Submit", class: 'btn btn-default', :name => nil %>
