@@ -15,15 +15,15 @@
   <div class="field">
     <%= f.text_field :title %>
   </div>
-  <strong>Change Categories (Leave blank if not changing)</strong>
+  <strong>Change Categories</strong>
   <div class="field">
     <%= f.collection_select(:categories, Category.all, :id, :title, {:selected => @document.categories.ids}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
-  <strong>Add or delete collaborators (Leave blank if not changing)</strong>
+  <strong>Add or delete collaborators</strong>
   <div class="field">
     <%= f.collection_select(:users, User.where.not(id: @document.user.id), :id, :first_name, {:selected => @document.users.ids}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
-<table class = "table">
+
 	<div class = "row">
 		<div class = "col-md-6 col-ms-12">
       <div class="panel panel-primary" >
@@ -31,11 +31,12 @@
           <%= f.label :text %>
         </div>
         <div class="panel-body">
-          <%= f.text_area :text, id: "text_to_edit",class: "col-md-12" %>
+          <%= f.text_area :text, id: "text_to_edit",class: "col-md-12 col-ms-12 col-xs-12" %>
         </div>
       </div>
 		</div>
-    <div class = "hidden-xs hidden-sm">
+
+    <div class = "hidden-xs hidden-sm col-md-6">
       <div class="panel panel-primary" >
         <div class = "panel-heading">
           <%= f.label :preview %>
@@ -46,12 +47,11 @@
               <%= markdown(@document.text) %>
             </p>
           </div>
-          <p id="demo" ></p>
+          <p id="real_time_preview" ></p>
         </div>
       </div>
     </div>
 	</div>
-</table>
 <%= f.label :is_a_public_document %>
 <% if @document.is_public? %>
   <%= f.check_box :is_public, {:checked => "checked"}, 'true', 'false' %> 
@@ -70,7 +70,7 @@
 <script>
 
 $('textarea').each(function () {
-  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden; min-height:350px');
 }).on('input', function () {
   this.style.height = 'auto';
   this.style.height = (this.scrollHeight) + 'px';
@@ -95,7 +95,7 @@ $("#text_to_edit").keyup(function() {
         },
         success: function(json) {
           //document.getElementById("demo").className = "panel panel-primary";
-        	document.getElementById("demo").innerHTML = json.text;
+        	document.getElementById("real_time_preview").innerHTML = json.text;
         	//result = $.parseJSON(json);
 
         },

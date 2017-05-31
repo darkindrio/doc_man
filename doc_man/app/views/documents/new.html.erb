@@ -23,31 +23,37 @@
   <div class="field">
     <%= f.collection_select(:users, User.where.not(id: @current_user.id), :id, :first_name, {}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
-<table class = "table">
-	<tr>
-		<th>
-        <div class="panel-body">
+  <div class = "row">
+
+    <div class = "col-md-6 col-ms-12">
+      <div class="panel panel-primary" >
+        <div class = "panel-heading">
           <%= f.label :text %>
-          <%= f.text_area :text, id: "text_to_edit",style: "margin: 0px; height: 410px; width: 573px;" %>
         </div>
-		</th>
-		<th>
-			  <div class="panel panel-primary" style="min-width: 580px;" >
-          <div class = "panel-heading">
-            <%= f.label :preview %>
+        <div class="panel-body">
+          <%= f.text_area :text, id: "text_to_edit",style: "min-height:350px", class: "col-md-12 col-ms-12 col-xs-12" %>
+        </div>
+      </div>
+    </div>
+
+    <div class = "hidden-xs hidden-sm col-md-6" >
+      <div class="panel panel-primary" style="min-width: 580px;" >
+        <div class = "panel-heading">
+          <%= f.label :preview %>
+        </div>
+        <div class="panel-body">
+          <div id='preview'>
+            <p >
+              <%= @document.text %>
+            </p>
           </div>
-          <div class="panel-body">
-            <div id='preview'>
-              <p >
-                <%= @document.text %>
-              </p>
-            </div>
-            <p id="demo" ></p>
-          </div>
-			  </div>
-		</th>
-	</tr>
-</table>
+          <p id="demo" ></p>
+        </div>
+      </div>
+    </div>
+	</div>
+	
+
   <div>
     <%= f.label :is_a_public_document %>
     <%= f.check_box :is_public, {}, 'true', 'false' %>
