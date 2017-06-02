@@ -5,9 +5,10 @@ class DocumentsController < ApplicationController
   # GET /documents.json
   def index
     if !params[:search].nil?
-      @documents = Document.where("title like ?", "%#{params[:search]}%").order('title ASC')
+      @documents = (Document.where("is_public == 't' AND title like ?", "%#{params[:search]}%").order('title ASC') +
+                    current_user.collab_documents.where("title like ?", "%#{params[:search]}%").order('title ASC')).uniq.sort_by{'title ASC'}
     else
-      @documents = (current_user.collab_documents.order('title ASC') + Document.where("is_public == 't'")).sort_by{'title ASC'}
+      @documents = (current_user.collab_documents.order('title ASC') + Document.where("is_public == 't'")).uniq.sort_by{'title ASC'}
     end
   end
 
@@ -61,6 +62,12 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
+    if !current_user.collab_documents.include?(@document) and !@document.is_public
+      respond_to do |format|
+        format.html { redirect_to documents_path, alert: "You don't have permissions to edit private document." }
+        format.json { render json: @document.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def categories

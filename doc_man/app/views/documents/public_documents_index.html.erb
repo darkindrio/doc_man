@@ -9,6 +9,7 @@
         <th>Title</th>
         <th>Text</th>
         <th>Category</th>
+        <th>Permissions</th>
         <th colspan="1"></th>
       </tr>
     </thead>
@@ -24,6 +25,13 @@
             <% end %>
 
           </p></td>
+          <td>
+            <%if document.is_public %>
+                Public
+            <%else%>
+                Private
+            <%end%>
+          </td>
           <td><%= link_to 'Show', public_show_path(:document => document), class: "btn btn-info", style: "color:white" %></td>
         </tr>
       <% end %>
