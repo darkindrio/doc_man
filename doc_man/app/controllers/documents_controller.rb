@@ -61,7 +61,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
-    doc = Document.find(19)
+    doc = params[:document]
     if !current_user.collab_documents.include?(@document) and !@document.is_public
       respond_to do |format|
         format.html { redirect_to documents_path, alert: "You don't have permissions to edit private document." }

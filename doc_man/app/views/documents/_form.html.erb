@@ -21,7 +21,7 @@
     <%= f.collection_select(:categories, Category.all, :id, :title, {}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
 
-  <table class = "table">
+  <table class = "table table-hover table-striped">
   	<tr>
   		<th>
         <div class="panel panel-primary" >
@@ -52,7 +52,7 @@
   </table>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => "btn btn-success" %>
   </div>
 <% end %>
 
