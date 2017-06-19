@@ -20,9 +20,9 @@
         <td><%= suggestion.user %></td>
         <td><%= suggestion.text %></td>
         <td><%= suggestion.status %></td>
-        <td><%= link_to 'Show', suggestion %></td>
-        <td><%= link_to 'Edit', edit_suggestion_path(suggestion) %></td>
-        <td><%= link_to 'Destroy', suggestion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', document_suggestion_path(suggestion.document,suggestion) %></td>
+        <td><%= link_to 'Edit', edit_document_suggestion_path(suggestion.document,suggestion) %></td>
+        <td><%= link_to 'Destroy',  document_suggestion_path(suggestion.document, suggestion), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

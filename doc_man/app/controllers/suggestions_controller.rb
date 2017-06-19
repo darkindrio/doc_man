@@ -25,10 +25,9 @@ class SuggestionsController < ApplicationController
   # POST /suggestions.json
   def create
     @suggestion = Suggestion.new(suggestion_params)
-
     respond_to do |format|
       if @suggestion.save
-        format.html { redirect_to @suggestion, notice: 'Suggestion was successfully created.' }
+        format.html { redirect_to document_suggestion_url(params[:suggestion][:document_id],@suggestion), notice: 'Suggestion was successfully created.' }
         format.json { render :show, status: :created, location: @suggestion }
       else
         format.html { render :new }
@@ -56,7 +55,7 @@ class SuggestionsController < ApplicationController
   def destroy
     @suggestion.destroy
     respond_to do |format|
-      format.html { redirect_to suggestions_url, notice: 'Suggestion was successfully destroyed.' }
+      format.html { redirect_to document_suggestions_url, notice: 'Suggestion was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
