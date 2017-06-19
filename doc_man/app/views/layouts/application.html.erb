@@ -20,7 +20,7 @@
             <%= link_to "DOCUMENT MANAGER", documents_path, id: "logo" %>
             <%= form_tag(documents_path, method: 'get', class: 'navbar-form navbar-left') do %>
             <%= search_field_tag 'search', params[:search], class: 'form-control', placeholder: 'Search'  %>
-            <%= submit_tag "Submit", class: 'btn btn-default', :name => nil %>
+            <%= submit_tag "Submit", class: 'btn btn-primary', :name => nil %>
             <% end %>
           <% else %>
             <%= link_to "DOCUMENT MANAGER", public_documents_path, id: "logo" %>

@@ -18,3 +18,17 @@
   color: #fff;
   text-decoration: none;
 }
+
+
+// Colors
+$brand-primary:         #4285F4;
+$brand-primary-dark:    #0d47a1;
+$brand-secondary:       #aa66cc;
+$brand-secondary-dark:  #9933CC;
+$brand-default:         #2BBBAD;
+$brand-default-dark:    #00695c;
+
+.btn-primary-2{
+  background-color: $brand-primary;
+  color: white;
+}
