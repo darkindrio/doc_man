@@ -56,12 +56,12 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.new
     @document.categories = [Category.new]
-    puts current_user
     @current_user = current_user
   end
 
   # GET /documents/1/edit
   def edit
+    doc = Document.find(19)
     if !current_user.collab_documents.include?(@document) and !@document.is_public
       respond_to do |format|
         format.html { redirect_to documents_path, alert: "You don't have permissions to edit private document." }
@@ -122,13 +122,6 @@ class DocumentsController < ApplicationController
     end
     params[:document][:categories] << Category.find(params[:document][:categories].drop(1))
 
-    if not User.find(params[:document][:users].drop(1)).blank?
-      @document.users = []
-      @document.users << User.find(params[:document][:users].drop(1))
-      @document.users.push(current_user)
-    end
-    params[:document][:users] << User.find(params[:document][:users].drop(1))
-
     if params[:document][:is_public] == 'true'
       @document.is_public = true
     else
@@ -137,6 +130,23 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.update(document_params)
+        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
+        format.json { render :show, status: :ok, location: @document }
+      else
+        format.html { render :edit }
+        format.json { render json: @document.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def updateCollaborators
+    @document = Document.find(params[:document][:id])
+    @document.users = []
+    @document.users << User.find(params[:document][:users])
+    @document.users.push(current_user)
+
+    respond_to do |format|
+      if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully updated.' }
         format.json { render :show, status: :ok, location: @document }
       else

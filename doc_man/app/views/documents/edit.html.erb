@@ -1,3 +1,37 @@
+<!-- Modal -->
+<div class="modal fade" id="editCollaboratorsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit collaborators</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 offset-md-2">
+            <%= collection_select(:users, :user_id, User.where.not(id: @document.users), :id, :first_name, {},{:size => 6}) %> 
+          </div>
+          <div class="col-md-6 offset-md-2" >
+            <%= collection_select(:users, :collaborators_users_id, @document.users.uniq, :id, :first_name, {},{:size => 6}) %>
+          </div>
+        </div>
+        <div class = "row">
+          <div class = "col-md-6">
+            <button type="button" onclick="addOrRemoveCollaborator('addCollaborator')" class="btn-primary">Add collaborator</button> 
+          </div>
+          <div class = "col-md-6">
+            <button type="button" onclick="addOrRemoveCollaborator('removeCollaborator')" class="btn-danger">Remove collaborator</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" onclick ="updateCollaborators(<%= @document.id %>)" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <h1>Editing Document</h1>
 <%= form_for(@document) do |f| %>
   <% if @document.errors.any? %>
@@ -19,9 +53,12 @@
   <div class="field">
     <%= f.collection_select(:categories, Category.all, :id, :title, {:selected => @document.categories.ids}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
   </div>
-  <strong>Add or delete collaborators</strong>
+  <strong>Current collaborators</strong>
   <div class="field">
-    <%= f.collection_select(:users, User.where.not(id: @document.user.id), :id, :first_name, {:selected => @document.users.ids}, {:style => "width:573px", :multiple => true, :class => 'category_selector'}) %>
+    <%= f.collection_select(:users, User.where.not(id: @document.user.id), :id, :first_name, {:selected => @document.users.ids}, {:style => "width:573px", :multiple => true, :class => 'category_selector', :disabled => "disabled"}) %>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editCollaboratorsModal">
+      Edit collaborators
+    </button>
   </div>
 
 	<div class = "row">
@@ -78,8 +115,77 @@ $('textarea').each(function () {
 
 $(document).ready(function(){
   $(".category_selector").select2();
+
 });
 
+function updateCollaborators(document_id){
+  var collaboratorsSelect = document.getElementById("users_collaborators_users_id").options;
+  
+  var collaboratorsIds = []
+  for(idx = 0; idx < collaboratorsSelect.length; idx++){
+    collaboratorsIds[idx] = collaboratorsSelect[idx].value;
+  }
+
+  var users = {
+    users: collaboratorsIds,
+    id: document_id
+  }
+  
+  $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "/collaborators",
+        data: {
+            document: users // < note use of 'this' here
+        },
+        success: function(json) {
+          $('#editCollaboratorsModal').modal('toggle'); 
+          location.reload();
+          //document.getElementById("demo").className = "panel panel-primary";
+          //document.getElementById("real_time_preview").innerHTML = json.text;
+          //result = $.parseJSON(json);
+
+        },
+        error: function(json) {
+            alert('error');
+        }
+    });
+  
+}
+
+function addOrRemoveCollaborator(action) {
+    
+    var originSelect;
+    var finalSelect;
+    // Check if we need add the collaborator or remove. 
+    if(action == "addCollaborator"){
+      originSelect= document.getElementById("users_user_id");
+      finalSelect = document.getElementById("users_collaborators_users_id");
+    }
+    else{
+      // Remove collaborator.
+      originSelect= document.getElementById("users_collaborators_users_id");
+      finalSelect = document.getElementById("users_user_id");
+    }
+    
+    // Check if we have something select.
+    var userId = originSelect.value;
+    if (userId != ""){
+      // Get the user info.
+      var currentIndex = originSelect.selectedIndex;
+      var userName = originSelect.options[currentIndex].text;
+
+      // Add the user to the finalSelect.
+      var newOption = document.createElement("option");
+      newOption.text = userName;
+      newOption.value = userId;
+      finalSelect.options.add(newOption, 1);
+
+      // Delete the user to the originSelect.
+      originSelect.options.remove(currentIndex);
+    }
+    
+}
 
 $("#text_to_edit").keyup(function() {
 	var rc_to_send = document.getElementById ( "text_to_edit" ).value;

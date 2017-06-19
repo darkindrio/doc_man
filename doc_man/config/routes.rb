@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   get "public_documents" => 'documents#public_documents_index', :as => :public_documents
   get "public_show" => 'documents#public_show', :as => :public_show
   get "/test" => "documents#markdownHtml"
+  post "/collaborators" => "documents#updateCollaborators"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

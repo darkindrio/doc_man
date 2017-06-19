@@ -14,7 +14,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require select2
+//= require bootstrap-sprockets
 //= require_tree .
+
 
 $(".alert-message").alert()
 $(".alert-message").alert('close')
