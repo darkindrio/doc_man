@@ -7,4 +7,5 @@ class Suggestion < ApplicationRecord
   	presence: true
   	}
 
+
 end
