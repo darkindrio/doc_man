@@ -1,11 +1,9 @@
-<p id="notice"><%= notice %></p>
 
 <h1>Suggestions</h1>
-
+<h2>Title : <%= @document.title %></h2>
 <table class='table table-hover table-striped'>
   <thead>
     <tr>
-      <th>Document</th>
       <th>User</th>
       <th>Text</th>
       <th>Status</th>
@@ -16,13 +14,12 @@
   <tbody>
     <% @suggestions.each do |suggestion| %>
       <tr>
-        <td><%= suggestion.document %></td>
         <td><%= suggestion.user %></td>
         <td><%= suggestion.text %></td>
         <td><%= suggestion.status %></td>
-        <td><%= link_to 'Show', document_suggestion_path(suggestion.document,suggestion) %></td>
-        <td><%= link_to 'Edit', edit_document_suggestion_path(suggestion.document,suggestion) %></td>
-        <td><%= link_to 'Destroy',  document_suggestion_path(suggestion.document, suggestion), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', document_suggestion_path(suggestion.document,suggestion), class: "btn btn-info", style: "color:white" %></td>
+        <td><%= link_to 'Edit', edit_document_suggestion_path(id: suggestion.id), class: "btn btn-primary", style: "color:white" %></td>
+        <td><%= link_to 'Destroy',  document_suggestion_path(suggestion.document, suggestion), class: "btn btn-danger", style: "color:white",method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +27,5 @@
 
 <br>
 
-<%= link_to 'New Suggestion', new_document_suggestion_path %>
+<%= link_to 'New Suggestion', new_document_suggestion_path, class: "btn btn-primary", style: "color:white" %>
+<%= link_to 'Back', documents_path, class: "btn btn-success", style: "color:white" %>
