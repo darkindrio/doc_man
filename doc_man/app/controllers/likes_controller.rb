@@ -22,7 +22,6 @@ class LikesController < ApplicationController
   end
 
   def addLike
-      puts "OOOOOOOOOOOOOOOOOOOOOOOOOOH"
       document_id = params[:document_id]
       user_id = current_user.id
       @like = Like.new
@@ -43,7 +42,6 @@ class LikesController < ApplicationController
     end
 
     def removeLike
-      puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH"
       document_id = params[:document_id]
       user_id = current_user.id
       @like = current_user.likes.where('document_id = ?', "#{document_id}").first

@@ -61,6 +61,12 @@
                             <% end %>
                         </li>
                         <li>
+                            <%= link_to new_user_registration_path do %>
+                              <span class="fa fa-user-plus" style="color:white"></span>
+                              New User
+                            <% end %>
+                        </li>
+                        <li>
                             <%= link_to(destroy_user_session_path, :method => :delete) do %>
                               <span class="fa fa-sign-out" style="color:white"></span>
                               Logout
@@ -77,12 +83,6 @@
                             <%= link_to new_user_session_path do %>
                               <span class="fa fa-sign-out" style="color:white"></span>
                               Sign In
-                            <% end %>
-                        </li>
-                        <li>
-                            <%= link_to new_user_registration_path do %>
-                              <span class="fa fa-user-plus" style="color:white"></span>
-                              Register
                             <% end %>
                         </li>
                     <% end %>

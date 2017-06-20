@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users do
-    get "/users/sign_out" => "devise/sessions#destroy", :as => :destroy_user_session
-  end
+  devise_for :users, :controllers => { :registrations => 'registrations'}
   authenticate :user do
       resources :documents do
         get 'categories', on: :member
@@ -16,7 +14,6 @@ Rails.application.routes.draw do
       get "/add_like" => "likes#addLike"
       get "/remove_like" => "likes#removeLike"
   end
-
   get "public_documents" => 'documents#public_documents_index', :as => :public_documents
   get "public_show" => 'documents#public_show', :as => :public_show
   get "/test" => "documents#markdownHtml"
