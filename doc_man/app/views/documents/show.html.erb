@@ -1,6 +1,4 @@
 
-
-
 <div class="panel panel-primary">
   <div class = "panel-heading">
     <h2>
@@ -38,15 +36,55 @@
     </p>
   </div>
   <div class="panel-footer">
-    <strong>Categories:</strong>
-    <% @document.categories.each do |c| %>
-        <%= c  %>
-        <% if not c.equal? @document.categories.last %>
-        |
+    <div class = "row">
+      <% if @current_user.id %>
+        <% button_class = 'btn btn-link notActive' %>
+        <% button_title = 'Like Document' %>
+        <% span_class = 's-notActive' %>
+        <% @current_user.likes.each do |like| %>
+          <% if like.document == @document %>
+            <% button_class = 'btn btn-link isActive' %>
+            <% button_title = 'Unlike Document' %>
+            <% span_class = 's-isActive' %>
+            <% break %>
+          <% end %>
         <% end %>
-    <% end %>
+      <% end %>
+      <div class = "col-md-6" align = "left">
+        <strong>Categories:</strong>
+        <% @document.categories.each do |c| %>
+            <%= c  %>
+            <% if not c.equal? @document.categories.last %>
+            |
+            <% end %>
+        <% end %>
+      </div>
+      <div class = "col-md-6" align = "right">
+        <span>
+        <p id='people-like-<%= @document.id -%>' style="display:inline;">Likes: <%= @document.likes.length %></p>
+        <button title="<%= button_title -%>" onclick="toggleLike(<%= @document.id -%>)" id="<%= @document.id -%>" type="button" class="<%= button_class -%>">
+          <span id="span-<%= @document.id -%>" class="glyphicon glyphicon-heart <%= span_class -%>"></span>
+        </button>
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 
 <%= link_to 'Edit', edit_document_path(@document), class: "btn btn-primary", style: "color:white" %> |
 <%= link_to 'Back', documents_path, class: "btn btn-success", style: "color:white" %>
+
+<style>
+.s-isActive {
+    color: #d9534f;  // Hex for primary-danger
+}
+.s-notActive{
+    color: grey;
+}
+.s-isActive:hover{
+    color: #990000;
+}
+.s-notActive:hover{
+    color: #474747;
+}
+</style>

@@ -4,6 +4,7 @@ class Document < ApplicationRecord
   has_many :categories, through: :document_categories
   has_many :users, through: :document_accesses
   has_many :suggestions
+  has_many :likes
   validates :title, {
   	length: { minimum: 3,  maximum: 50 },
   	presence: true,
