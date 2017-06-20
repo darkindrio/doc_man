@@ -22,6 +22,13 @@ class SuggestionUserCommentsController < ApplicationController
 
   # GET /suggestion_user_comments/1/edit
   def edit
+    @document = Document.find(params[:document_id])
+    @suggestion = Suggestion.find(params[:suggestion_id])
+    comment = SuggestionUserComment.find(params[:id])
+    comment_creator = comment.user
+    if comment_creator != current_user
+      redirect_to redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), alert: 'Unable to destroy this document.'
+    end
   end
 
   # POST /suggestion_user_comments
@@ -44,8 +51,9 @@ class SuggestionUserCommentsController < ApplicationController
   def update
     respond_to do |format|
       if @suggestion_user_comment.update(suggestion_user_comment_params)
-        format.html { redirect_to @suggestion_user_comment, notice: 'Suggestion user comment was successfully updated.' }
+        format.html { redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), notice: 'Suggestion user comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @suggestion_user_comment }
+
       else
         format.html { render :edit }
         format.json { render json: @suggestion_user_comment.errors, status: :unprocessable_entity }
@@ -56,10 +64,16 @@ class SuggestionUserCommentsController < ApplicationController
   # DELETE /suggestion_user_comments/1
   # DELETE /suggestion_user_comments/1.json
   def destroy
-    @suggestion_user_comment.destroy
-    respond_to do |format|
-      format.html { redirect_to suggestion_user_comments_url, notice: 'Suggestion user comment was successfully destroyed.' }
-      format.json { head :no_content }
+    comment = SuggestionUserComment.find(params[:id])
+    comment_creator = comment.user
+    if comment_creator == current_user
+      @suggestion_user_comment.destroy
+      respond_to do |format|
+        format.html { redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), notice: 'Suggestion user comment was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), alert: 'Unable to destroy this document.'
     end
   end
 

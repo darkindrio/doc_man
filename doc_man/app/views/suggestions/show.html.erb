@@ -36,6 +36,10 @@
 		  <%= comment.comment %>
 		</p>
     </div>
+    <div class="panel-body">
+    	<%= link_to 'Edit', edit_document_suggestion_suggestion_user_comment_path(suggestion_id: @suggestion.id,id: comment.id), class: "btn btn-primary", style: "color:white" %> |
+		<%= link_to 'Destroy',   document_suggestion_suggestion_user_comment_path(@suggestion.document, @suggestion, comment.id), class: "btn btn-danger", style: "color:white",method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
   </div>
 </div>
 <% end %>
