@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Document Manager</title>
+    <title>Super Doc-Man -- Your Dank Document Manager</title>
+    <link rel="shortcut icon" href='<%= asset_path("logofinal-head.png") %>'/>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -12,11 +13,7 @@
     <br>
     <br>
     <nav class="navbar navbar-toogleable-md navbar-fixed-top navbar-inverse">
-      <% if user_signed_in? %>
-        <%= link_to "DOCUMENT MANAGER", documents_path, id: "logo" %>
-      <% else %>
-        <%= link_to "DOCUMENT MANAGER", public_documents_path, id: "logo" %>
-      <% end %>
+
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -28,6 +25,15 @@
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-left">
+            <li>
+                <% if user_signed_in? %>
+                  <%= link_to image_tag("logofinal.png", :width=>"130px", :height=>"35px"), documents_path, id: "logo" %>
+                <% else %>
+                  <%= link_to image_tag("logofinal.png", :width=>"130px", :height=>"35px"), public_documents_path, id: "logo" %>
+                <% end %>
+            </li>
+          </ul>
           <% if user_signed_in? %>
             <%= form_tag(documents_path, method: 'get', class: 'form-inline navbar-form navbar-left') do %>
               <%= search_field_tag 'search', params[:search], class: 'form-control', placeholder: 'Search'  %>
