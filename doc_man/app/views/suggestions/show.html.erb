@@ -1,22 +1,54 @@
-<p>
-  <strong>Document:</strong>
-  <%= @suggestion.document %>
-</p>
+<div class="panel panel-primary">
+	<div class = "panel-heading">
+		<h2>
+			<strong>Document:</strong>
+	  		<%= @suggestion.document %>
+		</h2>
+		<h3>
+			<strong>Suggested by:</strong>
+	  		<%= @suggestion.user %>
+		</h3>
+	</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @suggestion.user %>
-</p>
+	<div class="panel-body">
+		<p>
+		  <%= @suggestion.text %>
+		</p>
+	</div>
+	<div class="panel-body">
+		  <strong>Status:</strong>
+		  <%= @suggestion.status %>
+		  <%= link_to 'Edit', edit_document_suggestion_path(id: @suggestion.id), class: "btn btn-primary", style: "color:white" %> |
+		  <%= link_to 'Back', document_suggestions_path, class: "btn btn-success", style: "color:white" %>
+	</div>
+</div>
 
-<p>
-  <strong>Text:</strong>
-  <%= @suggestion.text %>
-</p>
+<% @comments.each do |comment| %>
+<div class="container">
+  <h5>
+  	 <strong>
+  	 	<%= comment.user %> :
+  	 </strong>
+  </h5>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+		<p>
+		  <%= comment.comment %>
+		</p>
+    </div>
+  </div>
+</div>
+<% end %>
 
-<p>
-  <strong>Status:</strong>
-  <%= @suggestion.status %>
-</p>
+<div class="panel panel-primary">
+	<div class = "panel-heading">
+		<h4>
+			<strong>Add your comment !:</strong>
+		</h4>
+	</div>
 
-<%= link_to 'Edit', edit_document_suggestion_path(@suggestion) %> |
-<%= link_to 'Back', document_suggestions_path %>
+	<div class="panel-body">
+		<%= render partial: "suggestion_user_comments/form",locals:{document: @document,suggestion: @suggestion ,suggestion_user_comment: @suggestion_user_comment} %>
+	</div>
+</div>
+
