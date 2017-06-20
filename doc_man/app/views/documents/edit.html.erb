@@ -9,10 +9,10 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-6 offset-md-2">
-            <%= collection_select(:users, :user_id, User.where.not(id: @document.users.uniq), :id, :first_name, {},{:size => 6}) %>
+            <%= collection_select(:users, :user_id, User.where.not(id: @document.users.uniq), :id, :to_s, {},{:size => 6}) %>
           </div>
           <div class="col-md-6 offset-md-2" >
-            <%= collection_select(:users, :collaborators_users_id, @document.users.uniq, :id, :first_name, {},{:size => 6}) %>
+            <%= collection_select(:users, :collaborators_users_id, @document.users.uniq, :id, :to_s, {},{:size => 6}) %>
           </div>
         </div>
         <div class = "row">
@@ -47,7 +47,7 @@
 
    <%= f.label :title %>
   <div class="field">
-    <%= f.text_field :title %>
+    <%= f.text_field :title, :style => "width:573px" %>
   </div>
   <strong>Change Categories</strong>
   <div class="field">
@@ -55,11 +55,12 @@
   </div>
   <strong>Current collaborators</strong>
   <div class="field">
-    <%= f.collection_select(:users, User.where.not(id: @document.user.id), :id, :first_name, {:selected => @document.users.ids.uniq}, {:style => "width:573px", :multiple => true, :class => 'category_selector', :disabled => "disabled"}) %>
+    <%= f.collection_select(:users, User.where.not(id: @document.user.id), :id, :to_s, {:selected => @document.users.ids.uniq}, {:style => "width:573px", :multiple => true, :class => 'category_selector', :disabled => "disabled"}) %>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editCollaboratorsModal">
       Edit collaborators
     </button>
   </div>
+  <br>
 
 	<div class = "row">
 		<div class = "col-md-6 col-ms-12">

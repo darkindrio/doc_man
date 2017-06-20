@@ -15,7 +15,7 @@
     </thead>
 
     <tbody>
-      <% @documents.each do |document| %>
+      <% @documents.uniq.each do |document| %>
         <tr>
           <td><%= document.title %></td>
           <td><%= truncate(document.text.html_safe, length:75) %></td>

@@ -19,6 +19,7 @@ class User < ApplicationRecord
     has_many :collab_documents, through: :document_accesses, :source => :document
     has_many :documents
     has_many :suggestions
+    has_many :likes
 
     def to_s
       return first_name + ' ' + last_name

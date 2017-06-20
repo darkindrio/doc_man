@@ -4,6 +4,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
+    @current_user = current_user
     if !params[:search].nil?
       @documents = (Document.where("is_public == 't' AND title like ?", "%#{params[:search]}%").order('title ASC') +
                     current_user.collab_documents.where("title like ?", "%#{params[:search]}%").order('title ASC')).uniq.sort_by{'title ASC'}
@@ -31,6 +32,7 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
+    @current_user = current_user
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
     markdown_text = markdown.render(@document.text)
     @document.text = markdown_text
@@ -171,7 +173,11 @@ class DocumentsController < ApplicationController
 
 
     def set_document
-      @document = Document.find(params[:id])
+      if !params[:document_id].nil?
+        @document = Document.find(params[:document_id])
+      else
+        @document = Document.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
