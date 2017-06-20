@@ -1,6 +1,7 @@
 class Suggestion < ApplicationRecord
   belongs_to :document
   belongs_to :user
+  has_many :suggestion_user_comments
 
   validates :text, {
   	length: { minimum: 1,  maximum: 500 },

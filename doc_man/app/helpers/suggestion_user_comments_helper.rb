@@ -1,0 +1,2 @@
+module SuggestionUserCommentsHelper
+end

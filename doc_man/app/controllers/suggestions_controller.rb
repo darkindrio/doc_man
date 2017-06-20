@@ -12,6 +12,12 @@ class SuggestionsController < ApplicationController
   # GET /suggestions/1
   # GET /suggestions/1.json
   def show
+    @suggestion_user_comment = SuggestionUserComment.new
+    document_id = params[:document_id]
+    @document = Document.find(document_id)
+    @suggestions = Suggestion.find(params[:id])
+    @comments = @suggestions.suggestion_user_comments
+    
   end
 
   # GET /suggestions/new

@@ -20,6 +20,7 @@ class User < ApplicationRecord
     has_many :documents
     has_many :suggestions
     has_many :likes
+    has_many :suggestion_user_comments
 
     def to_s
       return first_name + ' ' + last_name
