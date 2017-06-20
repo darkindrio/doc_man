@@ -27,7 +27,7 @@ class SuggestionUserCommentsController < ApplicationController
     comment = SuggestionUserComment.find(params[:id])
     comment_creator = comment.user
     if comment_creator != current_user
-      redirect_to redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), alert: 'Unable to destroy this document.'
+      redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), alert: 'Unable to edit this document.'
     end
   end
 
@@ -49,14 +49,15 @@ class SuggestionUserCommentsController < ApplicationController
   # PATCH/PUT /suggestion_user_comments/1
   # PATCH/PUT /suggestion_user_comments/1.json
   def update
+    puts "user params"
+    puts suggestion_user_comment_params[:comment]
     respond_to do |format|
       if @suggestion_user_comment.update(suggestion_user_comment_params)
         format.html { redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), notice: 'Suggestion user comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @suggestion_user_comment }
-
       else
-        format.html { render :edit }
-        format.json { render json: @suggestion_user_comment.errors, status: :unprocessable_entity }
+        format.html { redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), alert: 'Error to edit this document.' }
+        format.json { render json: document_suggestion_path(params[:document_id],id: params[:suggestion_id]), status: :unprocessable_entity }
       end
     end
   end
@@ -73,7 +74,7 @@ class SuggestionUserCommentsController < ApplicationController
         format.json { head :no_content }
       end
     else
-      redirect_to redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), alert: 'Unable to destroy this document.'
+      redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), alert: 'Unable to destroy this document.'
     end
   end
 
