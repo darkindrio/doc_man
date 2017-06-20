@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   authenticate :user do
       resources :documents do
         get 'categories', on: :member
+        resources :suggestions
       end
       resources :categories
       resources :users
