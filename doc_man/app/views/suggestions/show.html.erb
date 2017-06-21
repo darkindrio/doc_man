@@ -22,37 +22,40 @@
 		  <%= link_to 'Back', document_suggestions_path, class: "btn btn-success", style: "color:white" %>
 	</div>
 </div>
-
-<% @comments.each do |comment| %>
-<div class="container">
-  <h5>
-  	 <strong>
-  	 	<%= comment.user %> :
-  	 </strong>
-  </h5>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-		<p>
-		  <%= comment.comment %>
-		</p>
-    </div>
-    <div class="panel-body">
-    	<%= link_to 'Edit', edit_document_suggestion_suggestion_user_comment_path(suggestion_id: @suggestion.id,id: comment.id), class: "btn btn-primary", style: "color:white" %> |
-		<%= link_to 'Destroy',   document_suggestion_suggestion_user_comment_path(@suggestion.document, @suggestion, comment.id), class: "btn btn-danger", style: "color:white",method: :delete, data: { confirm: 'Are you sure?' } %>
-    </div>
-  </div>
-</div>
-<% end %>
-
-<div class="panel panel-primary">
-	<div class = "panel-heading">
-		<h4>
-			<strong>Add your comment !:</strong>
-		</h4>
+<div class="well well-lg">
+	<% @comments.each do |comment| %>
+	<div class="container">
+	  <h5>
+	  	 <strong>
+	  	 	<%= comment.user %> :
+	  	 </strong>
+	  </h5>
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+			<p>
+			  <%= comment.comment %>
+			</p>
+	    </div>
+	    <% if comment.has_access(current_user) %>
+		    <div class="panel-body">
+		    	<%= link_to 'Edit', edit_document_suggestion_suggestion_user_comment_path(suggestion_id: @suggestion.id,id: comment.id), class: "btn btn-primary", style: "color:white" %> |
+				<%= link_to 'Destroy',   document_suggestion_suggestion_user_comment_path(@suggestion.document, @suggestion, comment.id), class: "btn btn-danger", style: "color:white",method: :delete, data: { confirm: 'Are you sure?' } %>
+		    </div>
+		<% end %>
+	  </div>
 	</div>
+	<% end %>
 
-	<div class="panel-body">
-		<%= render partial: "suggestion_user_comments/form",locals:{document: @document,suggestion: @suggestion ,suggestion_user_comment: @suggestion_user_comment} %>
+	<div class="panel panel-primary">
+		<div class = "panel-heading">
+			<h4>
+				<strong>Add your comment !:</strong>
+			</h4>
+		</div>
+
+		<div class="panel-body">
+			<%= render partial: "suggestion_user_comments/form",locals:{document: @document,suggestion: @suggestion ,suggestion_user_comment: @suggestion_user_comment} %>
+		</div>
 	</div>
 </div>
 

@@ -49,10 +49,9 @@ class SuggestionUserCommentsController < ApplicationController
   # PATCH/PUT /suggestion_user_comments/1
   # PATCH/PUT /suggestion_user_comments/1.json
   def update
-    puts "user params"
-    puts suggestion_user_comment_params[:comment]
+    new_comment = suggestion_user_comment_params[:comment]
     respond_to do |format|
-      if @suggestion_user_comment.update(suggestion_user_comment_params)
+      if @suggestion_user_comment.update(comment: new_comment)
         format.html { redirect_to document_suggestion_path(params[:document_id],id: params[:suggestion_id]), notice: 'Suggestion user comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @suggestion_user_comment }
       else
