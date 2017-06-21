@@ -1,28 +1,47 @@
 <div class="panel panel-primary">
 	<div class = "panel-heading">
 		<h2>
-			<strong>Document:</strong>
-	  		<%= @suggestion.document %>
+			<strong>Suggestion #<%= @suggestion.id %>:</strong>
+	  		<a href="<%= document_path(@suggestion.document) %>" style="color:white;">[<%= @suggestion.document %>]</a>
 		</h2>
-		<h3>
+		<h4>
 			<strong>Suggested by:</strong>
-	  		<%= @suggestion.user %>
-		</h3>
+			<%= @suggestion.user %>
+		</h4>
+		<div class = "row">
+			<div class = "col-md-12" align = "right">
+				<h5>
+					<strong>Posted on:</strong> <i><%= @suggestion.created_at.strftime('%a, %d %b %Y - %H:%M:%S') %></i>
+				</h5>
+				<h5>
+					<% if @suggestion.updated_at != @suggestion.created_at %>
+						<strong>Last Updated on:</strong>
+						<i><%= @suggestion.updated_at.strftime('%a, %d %b %Y - %H:%M:%S') %></i>
+					<% end %>
+				</h5>
+			</div>
+		</div>
 	</div>
 
 	<div class="panel-body">
-		<p>
-		  <%= @suggestion.text %>
-		</p>
-	</div>
-	<div class="panel-body">
-		  <strong>Status:</strong>
-		  <%= @suggestion.status %>
-		  <%= link_to 'Edit', edit_document_suggestion_path(id: @suggestion.id), class: "btn btn-primary", style: "color:white" %> |
-		  <%= link_to 'Back', document_suggestions_path, class: "btn btn-success", style: "color:white" %>
+    <p>
+      <%= @suggestion.text %>
+    </p>
+  </div>
+	<div class="panel-footer">
+			<div class = "row">
+				<div class = "col-md-6" align = "left">
+				  <%= link_to 'Edit', edit_document_suggestion_path(id: @suggestion.id), class: "btn btn-primary", style: "color:white" %> |
+				  <%= link_to 'Back', document_suggestions_path, class: "btn btn-success", style: "color:white" %>
+				</div>
+				<div class = "col-md-6" align = "right">
+					<strong>Status:</strong>
+					<%= @suggestion.status %>
+				</div>
+			</div>
 	</div>
 </div>
-<div class="well well-lg">
+<div>
 	<% @comments.each do |comment| %>
 	<div class="container">
 	  <h5>
@@ -30,7 +49,7 @@
 	  	 	<%= comment.user %> :
 	  	 </strong>
 	  </h5>
-	  <div class="panel panel-default">
+	  <div class="panel panel-default" style="width:1100px;">
 	    <div class="panel-heading">
 			<p>
 			  <%= comment.comment %>
@@ -38,24 +57,39 @@
 	    </div>
 	    <% if comment.has_access(current_user) %>
 		    <div class="panel-body">
-		    	<%= link_to 'Edit', edit_document_suggestion_suggestion_user_comment_path(suggestion_id: @suggestion.id,id: comment.id), class: "btn btn-primary", style: "color:white" %> |
-				<%= link_to 'Destroy',   document_suggestion_suggestion_user_comment_path(@suggestion.document, @suggestion, comment.id), class: "btn btn-danger", style: "color:white",method: :delete, data: { confirm: 'Are you sure?' } %>
-		    </div>
+					<div class = "row">
+						<div class = "col-md-6" align = "left">
+							<%= link_to 'Edit', edit_document_suggestion_suggestion_user_comment_path(suggestion_id: @suggestion.id,id: comment.id), class: "btn btn-primary", style: "color:white" %> |
+							<%= link_to 'Destroy',   document_suggestion_suggestion_user_comment_path(@suggestion.document, @suggestion, comment.id), class: "btn btn-danger", style: "color:white",method: :delete, data: { confirm: 'Are you sure?' } %>
+						</div>
+						<div class = "col-md-6" align = "right">
+							<div>
+								<strong>Posted on:</strong>
+								<i><%= comment.created_at.strftime('%a, %d %b %Y - %H:%M:%S') %></i>
+							</div>
+							<div>
+								<% if comment.updated_at != comment.created_at %>
+									<strong>Last Updated on:</strong>
+									<i><%= comment.updated_at.strftime('%a, %d %b %Y - %H:%M:%S') %></i>
+								<% end %>
+							</div>
+						</div>
+					</div>
+		     </div>
 		<% end %>
 	  </div>
 	</div>
 	<% end %>
 
-	<div class="panel panel-primary">
-		<div class = "panel-heading">
+	<div>
+		<div>
 			<h4>
-				<strong>Add your comment !:</strong>
+				<strong>Add a comment: </strong>
 			</h4>
 		</div>
 
-		<div class="panel-body">
+		<div>
 			<%= render partial: "suggestion_user_comments/form",locals:{document: @document,suggestion: @suggestion ,suggestion_user_comment: @suggestion_user_comment} %>
 		</div>
 	</div>
 </div>
-

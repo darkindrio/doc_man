@@ -19,25 +19,36 @@
     <%= f.hidden_field(:user_id, :value => current_user.id) %>
   </div>
   <div class="panel panel-primary" >
+    <div class = "panel-heading">
+  		<h2>
+  			<strong><%= action %> - <a href="<%= document_path(document) %>" style="color:white;">[<%= document %>]</a></strong>
+  		</h2>
+  	</div>
     <div class="panel-body">
-      <div class="well well-lg">
         <div class="field">
-          <%= f.text_area :text %>
+          <%= f.text_area :text, style: "margin: 0px; height: 110px; width: 573px;" %>
         </div>
-      </div>     
     </div>
     <div class="panel-footer">
-      <div class="field">
-        <% if suggestion.status.nil? %>
-          <%= f.hidden_field(:status, :value => 'Pending') %>
-        <% else %>
-          <%= f.label :status %>
-          <%=  f.select :status, ['Pending', 'Rejected', 'Implemented'] %>
-        <% end %>
-      </div>
-    </div>
+  			<div class = "row">
+  				<div class = "col-md-6" align = "left">
+            <div class="actions">
+                <%= f.submit :class => "btn btn-success" %> |
+                <%= link_to 'Back', document_suggestions_path, class: "btn btn-danger", style: "color:white" %>
+            </div>
+  				</div>
+  				<div class = "col-md-6" align = "right">
+            <div class="field">
+              <% if suggestion.status.nil? %>
+                <%= f.hidden_field(:status, :value => 'Pending') %>
+              <% else %>
+                <%= f.label :status %>
+                <%=  f.select :status, ['Pending', 'Rejected', 'Implemented'] %>
+              <% end %>
+            </div>
+  				</div>
+  			</div>
+  	</div>
   </div>
-  <div class="actions">
-      <%= f.submit :class => "btn btn-success" %>
-  </div>
+
 <% end %>

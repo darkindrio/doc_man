@@ -10,11 +10,7 @@ class Suggestion < ApplicationRecord
 
   def has_access(current_user)
   	collaborators = document.users
-  	if collaborators.include? current_user
-  		return true
-  	else
-  		return false
-    end
+  	return collaborators.include? current_user
   end
 
 

@@ -1,6 +1,10 @@
-
-<h1>Suggestions</h1>
-<h2>Title : <%= @document.title %></h2>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1>
+      Suggestions for:
+        <i><a href="<%= document_path(@document) %>" style="color:black;"><%= @document %></a></i>
+    </h1>
+  </div>
 <table class='table table-hover table-striped'>
   <thead>
     <tr>
@@ -15,7 +19,7 @@
     <% @suggestions.each do |suggestion| %>
       <tr>
         <td><%= suggestion.user %></td>
-        <td><%= suggestion.text %></td>
+        <td><%= truncate(suggestion.text.html_safe, length:75) %></td>
         <td><%= suggestion.status %></td>
         <td><%= link_to 'Show', document_suggestion_path(suggestion.document,suggestion), class: "btn btn-info", style: "color:white" %></td>
         <% if suggestion.has_access(current_user) == true %>
@@ -26,6 +30,7 @@
     <% end %>
   </tbody>
 </table>
+</div>
 <br>
 <%= link_to 'New Suggestion', new_document_suggestion_path, class: "btn btn-primary", style: "color:white" %>
 <%= link_to 'Back', documents_path, class: "btn btn-success", style: "color:white" %>

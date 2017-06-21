@@ -17,7 +17,7 @@ class SuggestionsController < ApplicationController
     @document = Document.find(document_id)
     @suggestions = Suggestion.find(params[:id])
     @comments = @suggestions.suggestion_user_comments
-    
+
   end
 
   # GET /suggestions/new
@@ -59,7 +59,7 @@ class SuggestionsController < ApplicationController
         format.html { redirect_to document_suggestions_url, notice: 'Suggestion was successfully updated.' }
         format.json { render :show, status: :ok, location: @suggestion }
       else
-        format.html { render :edit }
+        format.html { redirect_to edit_document_suggestion_path(@suggestion.document, @suggestion), alert: 'Failed to edit Suggestion, '+@suggestion.errors.full_messages[0]+'.' }
         format.json { render json: @suggestion.errors, status: :unprocessable_entity }
       end
     end

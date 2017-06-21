@@ -1,6 +1,1 @@
-<h1>Editing Suggestion</h1>
-
-<%= render 'form', document: @document, suggestion: @suggestion %>
-
-<%= link_to 'Show', document_suggestion_path(@suggestion) %> |
-<%= link_to 'Back', document_suggestions_path, class: "btn btn-danger", style: "color:white" %>
+<%= render 'form', document: @document, suggestion: @suggestion, action: "Editting Suggestion #"+@suggestion.id.to_s %>
