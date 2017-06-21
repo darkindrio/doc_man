@@ -55,28 +55,31 @@
 			  <%= comment.comment %>
 			</p>
 	    </div>
-	    <% if comment.has_access(current_user) %>
-		    <div class="panel-body">
-					<div class = "row">
+			<div class="panel-body">
+				<div class = "row">
+			    <% if comment.has_access(current_user) %>
 						<div class = "col-md-6" align = "left">
 							<%= link_to 'Edit', edit_document_suggestion_suggestion_user_comment_path(suggestion_id: @suggestion.id,id: comment.id), class: "btn btn-primary", style: "color:white" %> |
 							<%= link_to 'Destroy',   document_suggestion_suggestion_user_comment_path(@suggestion.document, @suggestion, comment.id), class: "btn btn-danger", style: "color:white",method: :delete, data: { confirm: 'Are you sure?' } %>
 						</div>
 						<div class = "col-md-6" align = "right">
-							<div>
-								<strong>Posted on:</strong>
-								<i><%= comment.created_at.strftime('%a, %d %b %Y - %H:%M:%S') %></i>
-							</div>
-							<div>
-								<% if comment.updated_at != comment.created_at %>
-									<strong>Last Updated on:</strong>
-									<i><%= comment.updated_at.strftime('%a, %d %b %Y - %H:%M:%S') %></i>
-								<% end %>
-							</div>
-						</div>
-					</div>
-		     </div>
-		<% end %>
+					<% else %>
+						<div class = "col-md-12" align = "right">
+					<% end %>
+
+			<div>
+				<strong>Posted on:</strong>
+				<i><%= comment.created_at.strftime('%a, %d %b %Y - %H:%M:%S') %></i>
+			</div>
+			<div>
+				<% if comment.updated_at != comment.created_at %>
+					<strong>Last Updated on:</strong>
+					<i><%= comment.updated_at.strftime('%a, %d %b %Y - %H:%M:%S') %></i>
+				<% end %>
+			</div>
+		</div>
+	</div>
+ </div>
 	  </div>
 	</div>
 	<% end %>

@@ -99,7 +99,7 @@ class DocumentsController < ApplicationController
     @document.text = params[:document][:text]
     @document.user = current_user
 
-    if params[:document][:is_public] = 'true'
+    if params[:document][:is_public] == 'true'
       @document.is_public = true
     else
       @document.is_public = false
