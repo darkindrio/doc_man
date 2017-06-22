@@ -1,9 +1,38 @@
-
-
-<p>
-  <strong>Title:</strong>
+<h1>
+  <strong>
   <%= @category.title %>
-</p>
+  </strong>
+</h1>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>
+      Documents in the <strong><%= @category.title %></strong> Category:
+    </h2>
+    <h5>
+      Current Documents with Category '<%= @category.title %>': <%= @category.documents.length %>
+    </h5>
+  </div>
+  <div class="panel-body">
+    <% @category.documents.each do |doc| %>
+      <% if @current_user.documents.include?(doc) or @current_user.collab_documents.include?(doc) or doc.is_public %>
+        <div style="display: inline-block;">
+          <div>
+          <%= link_to image_tag( 'doc.png', :style => "width:80px;height:80px"), doc %>
+          </div>
+          <div style="width: 60%;margin: 0 auto;">
+          <%=truncate(doc.title, length:8)%>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="panel-footer">
+  <p>
+    You may not see some documents due to privacy settings.
+  </p>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_category_path(@category), class: "btn btn-primary", style: "color:white" %> |
 <%= link_to 'Back', categories_path, class: "btn btn-success", style: "color:white" %>

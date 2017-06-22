@@ -1,26 +1,45 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<body id="home">
+<div class="container" style="padding-top: 0px;">
+  <div class="row" style="vertical-align: middle;">
+    <div class="col-md-6 left-home">
+      <h2>Welcome to Super Doc-Man.</h2>
+      <p>
+      Your favorite document manager!
+      </p>
     </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Log in", :class => "btn btn-success" %>
+    <div class="col-md-5 col-xs-12 right-home" style="padding-left: 5%; padding-right: 5%">
+      <div class="jumbotron" style="padding-left: 40px; padding-right: 40px;">
+        <div class="row">
+          <h2 style="text-align: center;">Log In</h2>
+        </div>
+        </br>
+        </br>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="row text-center">
+              <div class="col-xs-1">
+              </div>
+              <div class="form-inputs col-md-10">
+                <div class="row" style="margin-bottom: 10px">
+                <%= f.email_field :email, autofocus: true, label: false, :placeholder => "Mail"%>
+                </div><div class="row" style="margin-bottom: 10px">
+                  <%= f.password_field :password, label: false, :placeholder => "Contraseña"%>
+              </div>
+              </div>
+            </div>
+            <!--<%= render "devise/shared/links" %> -->
+            </br>
+            <div class="row">
+            <div style="width: 50%; margin: 0 auto;">
+              <div style="width: 50%; margin: 0 auto;">
+                <%= f.submit "Log in", :class => "btn btn-success"%>
+                <br>
+              </div>
+                  <%= render "devise/shared/links" %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
+</body>

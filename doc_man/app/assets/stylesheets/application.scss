@@ -21,3 +21,37 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import "font-awesome";
+
+ /* Begin devise/session/new. */
+ body#home{
+     background-image: url(wallpaper.jpg);
+     background-repeat: no-repeat;
+     background-size: cover
+ }
+
+ body#register{
+     background-image: url(new_user.jpg);
+     background-repeat: no-repeat;
+     background-size: cover
+ }
+
+ .left-home{
+     margin-top: 60px;
+ }
+
+ .right-home{
+     margin-top: 60px;
+ }
+ .left-home h2{
+     color: white;
+     padding-left: 22px;
+ }
+
+ .left-home p{
+     color: white;
+     margin-top: 40px;
+     padding-left: 20px;
+     padding-right: 20px;
+     font-size: 21px;
+     font-weight: 300;
+ }
