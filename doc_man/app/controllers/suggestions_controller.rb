@@ -31,8 +31,8 @@ class SuggestionsController < ApplicationController
     document_id = params[:document_id]
     @document = Document.find(document_id)
     collaborators = @document.users
-    if not collaborators.include? current_user
-      redirect_to document_suggestions_url, alert: 'Unable to edit this document.'
+    if not collaborators.include? current_user and current_user != @suggestion.user
+      redirect_to document_suggestions_url, alert: 'Unable to edit this suggestion.'
     end
   end
 
@@ -71,14 +71,14 @@ class SuggestionsController < ApplicationController
     document_id = params[:document_id]
     document = Document.find(document_id)
     collaborators = document.users
-    if collaborators.include? current_user
+    if collaborators.include? current_user or current_user == @suggestion.user
       @suggestion.destroy
       respond_to do |format|
         format.html { redirect_to document_suggestions_url, notice: 'Suggestion was successfully destroyed.' }
         format.json { head :no_content }
       end
     else
-      redirect_to document_suggestions_url, alert: 'Unable to destroy this document.'
+      redirect_to document_suggestions_url, alert: 'Unable to destroy this suggestion.'
     end
   end
 

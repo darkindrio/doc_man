@@ -71,8 +71,18 @@
   </div>
 </div>
 
-<%= link_to 'Edit', edit_document_path(@document), class: "btn btn-primary", style: "color:white" %> |
-<%= link_to 'Back', documents_path, class: "btn btn-success", style: "color:white" %>
+<div class = "row">
+  <div class = "col-md-6" align = "left">
+    <%= link_to 'Edit', edit_document_path(@document), class: "btn btn-primary", style: "color:white" %> |
+    <%= link_to 'Back', documents_path, class: "btn btn-success", style: "color:white" %>
+  </div>
+  <div class = "col-md-6" align = "right">
+    <%= link_to document_suggestions_path(@document), class: "btn btn-primary-2", style: "color:white"  do %>
+      <span class="fa fa-comment" style="color:white;"></span>
+      <%= @document.suggestions.length %> Suggestions
+    <% end %>
+  </div>
+</div>
 
 <style>
 .s-isActive {
