@@ -6,8 +6,8 @@ class DocumentsController < ApplicationController
   def index
     @current_user = current_user
     if !params[:search].nil?
-      @documents = (Document.where("is_public = 'true' AND title like ?", "%#{params[:search]}%").order('title ASC') +
-                    current_user.collab_documents.where("title like ?", "%#{params[:search]}%").order('title ASC')).uniq.sort_by{'title ASC'}
+      @documents = (Document.where("is_public = 'true' AND lower(title) like ?", "%#{params[:search].downcase}%").order('title ASC') +
+                    current_user.collab_documents.where("title lower(title) like ?", "%#{params[:search].downcase}%").order('title ASC')).uniq.sort_by{'title ASC'}
     else
       @documents = (current_user.collab_documents.order('title ASC') + Document.where("is_public = 'true'")).uniq.sort_by{'title ASC'}
     end
@@ -23,7 +23,7 @@ class DocumentsController < ApplicationController
   # GET /documents.json
   def public_documents_index
     if !params[:search].nil?
-      @documents = Document.where("is_public = 'true' AND title like ?", "%#{params[:search]}%").order('title ASC')
+      @documents = Document.where("is_public = 'true' AND lower(title) like ?", "%#{params[:search].downcase}%").order('title ASC')
     else
       @documents = Document.where("is_public = 'true'").order('title ASC')
     end
