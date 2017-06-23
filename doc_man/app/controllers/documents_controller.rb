@@ -7,7 +7,7 @@ class DocumentsController < ApplicationController
     @current_user = current_user
     if !params[:search].nil?
       @documents = (Document.where("is_public = 'true' AND lower(title) like ?", "%#{params[:search].downcase}%").order('title ASC') +
-                    current_user.collab_documents.where("title like ?", "%#{params[:search].downcase}%").order('title ASC')).uniq.sort_by{'title ASC'}
+                    current_user.collab_documents.where("title  like ?", "%#{params[:search].downcase}%").order('title ASC')).uniq.sort_by{'title ASC'}
     else
       @documents = (current_user.collab_documents.order('title ASC') + Document.where("is_public = 'true'")).uniq.sort_by{'title ASC'}
     end
@@ -161,10 +161,17 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy
-    @document.destroy
-    respond_to do |format|
-      format.html { redirect_to documents_url, notice: 'Document was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.collab_documents.include?(@document)
+      @document.destroy
+      respond_to do |format|
+        format.html { redirect_to documents_url, notice: 'Document was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to documents_url, alert: "You don't have permissions to destroy private document." }
+        format.json { head :no_content }
+      end
     end
   end
 
