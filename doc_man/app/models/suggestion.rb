@@ -1,7 +1,7 @@
 class Suggestion < ApplicationRecord
   belongs_to :document
   belongs_to :user
-  has_many :suggestion_user_comments
+  has_many :suggestion_user_comments,  dependent: :destroy 
 
   validates :text, {
   	length: { minimum: 1,  maximum: 500 },

@@ -1,10 +1,10 @@
 class Document < ApplicationRecord
-  has_many :document_categories
-  has_many :document_accesses
-  has_many :categories, through: :document_categories
-  has_many :users, through: :document_accesses
-  has_many :suggestions
-  has_many :likes
+  has_many :document_categories,  dependent: :destroy
+  has_many :document_accesses,  dependent: :destroy
+  has_many :categories, through: :document_categories,  dependent: :destroy
+  has_many :users, through: :document_accesses,  dependent: :destroy
+  has_many :suggestions,  dependent: :destroy
+  has_many :likes,  dependent: :destroy 
   validates :title, {
   	length: { minimum: 3,  maximum: 50 },
   	presence: true,
