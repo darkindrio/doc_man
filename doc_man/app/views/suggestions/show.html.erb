@@ -43,6 +43,25 @@
 </div>
 <div>
 	<% @comments.each do |comment| %>
+
+<div class="modal fade" id="exampleModal<%= comment.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">
+        	Edit comment
+        </h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render partial: "suggestion_user_comments/form",:action => '#suggestion_user_comments#edit',locals:{document: @document,suggestion: @suggestion ,suggestion_user_comment: comment} %>       
+      </div>
+    </div>
+  </div>
+</div>
+
 	<div class="container">
 	  <h5>
 	  	 <strong>
@@ -59,13 +78,16 @@
 				<div class = "row">
 			    <% if comment.has_access(current_user) %>
 						<div class = "col-md-6" align = "left">
-							<%= link_to 'Edit', edit_document_suggestion_suggestion_user_comment_path(suggestion_id: @suggestion.id,id: comment.id), class: "btn btn-primary", style: "color:white" %> |
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<%= comment.id %>" >
+							  Edit
+							</button>
 							<%= link_to 'Destroy',   document_suggestion_suggestion_user_comment_path(@suggestion.document, @suggestion, comment.id), class: "btn btn-danger", style: "color:white",method: :delete, data: { confirm: 'Are you sure?' } %>
 						</div>
 						<div class = "col-md-6" align = "right">
-					<% else %>
+				<% else %>
 						<div class = "col-md-12" align = "right">
-					<% end %>
+
+				<% end %>
 
 			<div>
 				<strong>Posted on:</strong>
@@ -92,7 +114,9 @@
 		</div>
 
 		<div>
-			<%= render partial: "suggestion_user_comments/form",locals:{document: @document,suggestion: @suggestion ,suggestion_user_comment: @suggestion_user_comment} %>
+			<%= render partial: "suggestion_user_comments/form",locals:{document: @document,suggestion: @suggestion ,suggestion_user_comment: @suggestion_user_comment} %> 
+			<%= link_to 'Back', document_suggestions_path, class: "btn btn-success", style: "color:white" %>
 		</div>
 	</div>
 </div>
+
