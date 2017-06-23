@@ -73,7 +73,9 @@
 
 <div class = "row">
   <div class = "col-md-6" align = "left">
-    <%= link_to 'Edit', edit_document_path(@document), class: "btn btn-primary", style: "color:white" %> |
+    <% if @current_user.collab_documents.include?(@document) or @current_user.documents.include?(@document) %>
+      <%= link_to 'Edit', edit_document_path(@document), class: "btn btn-primary", style: "color:white" %> |
+    <%end%>
     <%= link_to 'Back', documents_path, class: "btn btn-success", style: "color:white" %>
   </div>
   <div class = "col-md-6" align = "right">
